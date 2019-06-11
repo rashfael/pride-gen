@@ -4,10 +4,9 @@
 		.settings
 			.colors
 				.color(v-for="color, index in colors")
-					span Color {{ index + 1 }}
-					input(type="color", :value="color", @input="changeColor(index, $event)")
+					bunt-input(type="color", :name="`color-${index + 1}`", :label="`Color ${index + 1}`", :value="color", @input="changeColor(index, $event)")
 					bunt-icon-button(@click="deleteColor(index)") close
-				bunt-icon-button(@click="addColor") add
+				bunt-button#btn-add-color(@click="addColor") add color
 			bunt-input(name="stripe-curve", v-model="stripeCurve", label="Stripe Curve")
 			bunt-input(name="transform", v-model="transform", label="Transform")
 			bunt-input(name="mask", v-model="mask", label="Mask")
@@ -18,6 +17,9 @@
 </template>
 <script>
 import generateSVG from 'lib/generator'
+
+const URL_WRITE_DEBOUNCE = 1000
+
 export default {
 	components: {},
 	data () {
@@ -53,20 +55,48 @@ export default {
 			return 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg)
 		}
 	},
+	watch: {
+		// watch the whole output because I am lazy
+		SVGContent () {
+			if (this.urlWriteDebounceTimeout) return
+			this.updateURL()
+			this.urlWriteDebounceTimeout = setTimeout(() => {
+				this.urlWriteDebounceTimeout = null
+				this.updateURL()
+			}, URL_WRITE_DEBOUNCE)
+		}
+	},
 	created () {},
 	mounted () {
-		this.$nextTick(() => {
-		})
+		const hash = window.location.hash.substr(1)
+		if (hash) {
+			try {
+				Object.assign(this, JSON.parse(atob(hash)))
+			} catch (e) {
+				console.error('Could not parse hash', e)
+			}
+		}
 	},
 	methods: {
-		changeColor (index, event) {
-			this.$set(this.colors, index, event.target.value)
+		changeColor (index, color) {
+			this.$set(this.colors, index, color)
 		},
 		deleteColor (index) {
 			this.colors.splice(index, 1)
 		},
 		addColor () {
 			this.colors.push('#ffffff')
+		},
+		updateURL () {
+			const hash = btoa(JSON.stringify({
+				colors: this.colors,
+				stripeCurve: this.stripeCurve,
+				transform: this.transform,
+				mask: this.mask,
+				offsetTop: this.offsetTop,
+				addLogo: this.addLogo
+			}))
+			window.location.hash = hash
 		}
 	}
 }
@@ -92,10 +122,15 @@ export default {
 			flex-direction: column
 			.color
 				display: flex
-				align-items: center
-				margin: 4px 0
+				align-items: baseline
+				.bunt-input
+					flex: auto
 				.bunt-icon-button
 					margin-left: 8px
+			#btn-add-color
+				margin: 16px 0 32px 0
+				button-style(text-color: $clr-primary-text-dark)
+				background-image: unquote(stripe(rainbow, -45deg, 16px))
 		.bunt-icon-button
 			icon-button-style()
 		.bunt-input
