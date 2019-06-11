@@ -14,6 +14,7 @@
 			bunt-switch(name="add-logo", v-model="addLogo", label="add datenobservatorium logo")
 		a#btn-export.bunt-button(:href="downloadFile", download="pride.svg") export
 	svg(viewBox="0 0 100 100", v-html="SVGContent")
+	canvas(ref="faviconCanvas", height="32px", width="32px")
 </template>
 <script>
 import generateSVG from 'lib/generator'
@@ -50,19 +51,21 @@ export default {
 				addLogo: this.addLogo
 			})
 		},
+		SVGFile () {
+			return '<?xml version="1.0" encoding="UTF-8" standalone="no"?>\n<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 100 100">' + this.SVGContent + '</svg>'
+		},
 		downloadFile () {
-			let svg = '<?xml version="1.0" encoding="UTF-8" standalone="no"?>\n<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 100 100">' + this.SVGContent + '</svg>'
-			return 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg)
+			return 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(this.SVGFile)
 		}
 	},
 	watch: {
 		// watch the whole output because I am lazy
 		SVGContent () {
 			if (this.urlWriteDebounceTimeout) return
-			this.updateURL()
 			this.urlWriteDebounceTimeout = setTimeout(() => {
 				this.urlWriteDebounceTimeout = null
 				this.updateURL()
+				this.drawFavicon()
 			}, URL_WRITE_DEBOUNCE)
 		}
 	},
@@ -76,6 +79,7 @@ export default {
 				console.error('Could not parse hash', e)
 			}
 		}
+		this.drawFavicon()
 	},
 	methods: {
 		changeColor (index, color) {
@@ -97,6 +101,20 @@ export default {
 				addLogo: this.addLogo
 			}))
 			window.location.hash = hash
+		},
+		drawFavicon () {
+			const canvas = this.$refs.faviconCanvas
+			const svg = new Blob([this.SVGFile], {type: 'image/svg+xml;charset=utf-8'})
+			const url = URL.createObjectURL(svg)
+			const img = new Image()
+
+			img.onload = function () {
+				canvas.getContext('2d').drawImage(this, 0, 0)
+				URL.revokeObjectURL(url)
+				const link = document.querySelector("link[rel*='icon']")
+				link.href = canvas.toDataURL()
+			}
+			img.src = url
 		}
 	}
 }
@@ -125,6 +143,9 @@ export default {
 				align-items: baseline
 				.bunt-input
 					flex: auto
+					input
+						padding: 0
+						height: 34px
 				.bunt-icon-button
 					margin-left: 8px
 			#btn-add-color
@@ -146,4 +167,10 @@ export default {
 		margin: 0 64px
 		align-self: center
 		max-height: 80vh
+
+	> canvas
+		display: none
+		position: fixed
+		right: 0
+		top: 0
 </style>
