@@ -143,9 +143,6 @@ export default {
 				align-items: baseline
 				.bunt-input
 					flex: auto
-					input
-						padding: 0
-						height: 34px
 				.bunt-icon-button
 					margin-left: 8px
 			#btn-add-color
