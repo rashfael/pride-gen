@@ -5,7 +5,7 @@
 			.colors
 				.color(v-for="color, index in colors")
 					bunt-input.input-color(type="color", :name="`color-${index + 1}`", :label="`Color ${index + 1}`", :value="color.color", @input="changeColor(index, $event)")
-					bunt-input.input-ratio(type="number", :name="`ratio-${index + 1}`", :label="`Ratio}`", :value="color.ratio", @input="changeRatio(index, $event)")
+					bunt-input.input-ratio(type="number", :name="`ratio-${index + 1}`", label="Ratio", :value="color.ratio", @input="changeRatio(index, $event)")
 					bunt-icon-button(@click="deleteColor(index)") close
 				bunt-button#btn-add-color(@click="addColor") add color
 			bunt-input(name="stripe-curve", v-model="stripeCurve", label="Stripe Curve")
