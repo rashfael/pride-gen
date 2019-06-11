@@ -12,7 +12,7 @@ export default [{
 	transform: 'rotate(-20, 50, 50)',
 	mask: '<circle cx="50" cy="50" r="50" fill="white"/>',
 	offsetTop: 7,
-	addLogo: false
+	addLogo: true
 }, {
 	// trans https://upload.wikimedia.org/wikipedia/commons/b/b0/Transgender_Pride_flag.svg
 	colors: [
