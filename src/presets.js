@@ -30,14 +30,14 @@ export default [{
 }, {
 	// ace https://upload.wikimedia.org/wikipedia/commons/9/9e/Asexual_Pride_Flag.svg
 	colors: [
-		{color: '#000000', ratio: 1.25},
+		{color: '#000000', ratio: 2},
 		{color: '#a3a3a3', ratio: 1},
 		{color: '#FFFFFF', ratio: 1},
-		{color: '#800080', ratio: 1},
+		{color: '#800080', ratio: 2},
 	],
-	stripeCurve: 'c 30 4, 40 -15, 100 0',
-	transform: 'rotate(20, 50, 50)',
-	mask: '<circle cx="50" cy="50" r="50" fill="white"/>',
+	stripeCurve: 'l 60 10',
+	transform: '',
+	mask: '<path d="M 49.474599,0.83408356 64.702459,31.6891 98.752992,36.636933 74.113795,60.654213 79.930319,94.567159 49.474598,78.555637 19.018875,94.567157 24.835401,60.654213 0.19620489,36.636931 34.246737,31.6891 Z" fill="white"/>',
 	offsetTop: 7,
 	addLogo: false
 }, {

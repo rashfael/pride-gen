@@ -85,7 +85,6 @@ export default {
 				console.error('Could not parse hash', e)
 			}
 		}
-		this.drawFavicon()
 	},
 	methods: {
 		changeColor (index, color) {
@@ -98,7 +97,7 @@ export default {
 			this.colors.splice(index, 1)
 		},
 		addColor () {
-			this.colors.push('#ffffff')
+			this.colors.push({color: '#ffffff', ratio: 1})
 		},
 		selectPreset (preset) {
 			this.colors = preset.colors.slice()
@@ -122,7 +121,6 @@ export default {
 			const svg = new Blob([this.SVGFile], {type: 'image/svg+xml;charset=utf-8'})
 			const url = URL.createObjectURL(svg)
 			const img = new Image()
-
 			img.onload = function () {
 				canvas.getContext('2d').drawImage(this, 0, 0)
 				URL.revokeObjectURL(url)
@@ -158,6 +156,11 @@ export default {
 				align-items: baseline
 				.bunt-input
 					flex: auto
+				.input-color
+					.label-input-container
+						height: 32px
+					input
+						padding: 2px 16px
 				.input-ratio
 					max-width: 64px
 					margin-left: 4px

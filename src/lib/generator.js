@@ -1,6 +1,7 @@
 // generate svg based on a 100x100 viewport
 
 const TOTAL_HEIGHT = 100
+let maskCounter = 0 // ensure unique mask ids
 
 export default function generateSVG (options) {
 	const colors = options.colors.slice()
@@ -10,12 +11,13 @@ export default function generateSVG (options) {
 
 	const stripeSize = TOTAL_HEIGHT / options.colors.reduce((acc, {ratio}) => acc + ratio, 0)
 	// use mask instead of clip to avoid ragged edges
+	maskCounter++
 	if (mask) {
-		output += `<mask id="mask">${mask}</mask>`
+		output += `<mask id="mask-${maskCounter}">${mask}</mask>`
 	}
 	output += `<g transform="${transform}"`
 	if (mask) {
-		output += 'mask="url(#mask)"'
+		output += ` mask="url(#mask-${maskCounter})"`
 	}
 	output += '>'
 	// output colors in reverse order for first color to be on top
