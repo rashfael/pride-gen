@@ -1,0 +1,21 @@
+@import 'settings'
+variables()
+normalize-css()
+base()
+typography()
+components()
+scrollbars()
+
+a
+	color $clr-primary
+	text-decoration none
+
+html, body, #app
+	margin: 0
+	height: 100%
+	width: 100%
+	overflow: hidden
+
+
+.bunt-scrollbar
+	min-height: 0 // firefox can fuck off into space

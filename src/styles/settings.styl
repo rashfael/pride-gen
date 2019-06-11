@@ -1,0 +1,36 @@
+// ---------------
+// Global Settings
+// ---------------
+
+// Default font settings
+// buntpapier defaults are fine
+monospace = unquote("'Roboto Mono', 'Bitstream Vera Sans Mono', Consolas, Courier, monospace")
+
+$font-stack = 'Roboto', "Helvetica Neue", HelveticaNeue, Helvetica, Arial, "Microsoft Yahei", "微软雅黑", STXihei, "华文细黑", sans-serif
+// $clr-primary = $ax-primary
+// $clr-secondary = $clr-blue-grey-400
+// $clr-intro = $clr-amber-800
+
+
+$sidebar-list-width = 424px
+
+
+// rupture.scale = 0 480px 768px 992px 1200px 1800px
+// rupture.scale-names = 'xs' 's' 'm' 'l' 'xl' 'hd'
+
+stripe(colors, angle, width)
+	$grad = 'repeating-linear-gradient(' + angle
+	for $clr, $i in colors
+		$grad += ',' + $clr + ' ' + $i*width + ',' + $clr + ' ' + ($i + 1)*width
+	$grad += ')'
+	return $grad
+
+rainbow = $clr-teal $clr-green $clr-light-green $clr-lime $clr-yellow $clr-amber $clr-orange $clr-deep-orange $clr-red $clr-pink $clr-purple $clr-deep-purple $clr-indigo $clr-blue $clr-light-blue $clr-cyan//$clr-brown $clr-grey $clr-blue-grey
+
+.rainbow
+	font-size: 325px
+	background-image: unquote(stripe(rainbow, 90deg, 18px))
+	background-size: 100% 100%
+	background-repeat: no-repeat
+	-webkit-background-clip: text
+	-webkit-text-fill-color: transparent
