@@ -85,6 +85,7 @@ export default {
 				console.error('Could not parse hash', e)
 			}
 		}
+		this.drawFavicon()
 	},
 	methods: {
 		changeColor (index, color) {
@@ -153,12 +154,12 @@ export default {
 			flex-direction: column
 			.color
 				display: flex
-				align-items: baseline
+				align-items: flex-end
 				.bunt-input
 					flex: auto
 				.input-color
 					.label-input-container
-						height: 32px
+						height: 37px
 					input
 						padding: 2px 16px
 				.input-ratio
@@ -176,6 +177,7 @@ export default {
 			icon-button-style()
 		.bunt-input
 			input-style(size: compact)
+			flex: none
 		.bunt-switch
 			margin: 16px 0
 		#btn-export
