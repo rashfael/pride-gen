@@ -7,7 +7,6 @@ import 'styles/style.styl'
 
 import App from './App.vue'
 
-
 Vue.config.productionTip = false
 Vue.use(Buntpapier)
 new Vue({

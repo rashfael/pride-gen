@@ -4,13 +4,13 @@
 		.settings
 			.colors
 				.color(v-for="color, index in colors")
-					bunt-input(type="color", :name="`color-${index + 1}`", :label="`Color ${index + 1}`", :value="color", @input="changeColor(index, $event)")
+					bunt-input.input-color(type="color", :name="`color-${index + 1}`", :label="`Color ${index + 1}`", :value="color.color", @input="changeColor(index, $event)")
+					bunt-input.input-ratio(type="number", :name="`ratio-${index + 1}`", :label="`Ratio}`", :value="color.ratio", @input="changeRatio(index, $event)")
 					bunt-icon-button(@click="deleteColor(index)") close
 				bunt-button#btn-add-color(@click="addColor") add color
 			bunt-input(name="stripe-curve", v-model="stripeCurve", label="Stripe Curve")
 			bunt-input(name="transform", v-model="transform", label="Transform")
 			bunt-input(name="mask", v-model="mask", label="Mask")
-			bunt-input(name="offset-top", type="number", v-model.number="offsetTop", label="Offset Top")
 			bunt-switch(name="add-logo", v-model="addLogo", label="add datenobservatorium logo")
 		a#btn-export.bunt-button(:href="downloadFile", download="pride.svg") export
 	svg(viewBox="0 0 100 100", v-html="SVGContent")
@@ -26,12 +26,12 @@ export default {
 	data () {
 		return {
 			colors: [
-				'#e40303',
-				'#ff8c00',
-				'#ffed00',
-				'#008026',
-				'#004dff',
-				'#750787'
+				{color: '#e40303', ratio: 1.5},
+				{color: '#ff8c00', ratio: 1},
+				{color: '#ffed00', ratio: 1},
+				{color: '#008026', ratio: 1},
+				{color: '#004dff', ratio: 1},
+				{color: '#750787', ratio: 1}
 			],
 			stripeCurve: 'c 30 4, 40 -15, 100 0',
 			transform: 'rotate(-20, 50, 50)',
@@ -47,7 +47,6 @@ export default {
 				stripeCurve: this.stripeCurve,
 				transform: this.transform,
 				mask: this.mask,
-				offsetTop: this.offsetTop,
 				addLogo: this.addLogo
 			})
 		},
@@ -83,7 +82,10 @@ export default {
 	},
 	methods: {
 		changeColor (index, color) {
-			this.$set(this.colors, index, color)
+			this.$set(this.colors[index], 'color', color)
+		},
+		changeRatio (index, ratio) {
+			this.$set(this.colors[index], 'ratio', Number(ratio))
 		},
 		deleteColor (index) {
 			this.colors.splice(index, 1)
@@ -143,6 +145,11 @@ export default {
 				align-items: baseline
 				.bunt-input
 					flex: auto
+				.input-ratio
+					max-width: 64px
+					margin-left: 4px
+					input
+						text-align: right
 				.bunt-icon-button
 					margin-left: 8px
 			#btn-add-color

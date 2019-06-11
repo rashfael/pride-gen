@@ -4,11 +4,10 @@ const TOTAL_HEIGHT = 100
 
 export default function generateSVG (options) {
 	const {colors, transform, mask, addLogo} = options
-	const offsetTop = options.offsetTop || 0
 	const stripeCurve = options.stripeCurve || 'l 100 0'
 	let output = ''
 
-	const stripeSize = (TOTAL_HEIGHT - offsetTop) / options.colors.length
+	const stripeSize = TOTAL_HEIGHT / options.colors.reduce((acc, {ratio}) => acc + ratio, 0)
 	// use mask instead of clip to avoid ragged edges
 	if (mask) {
 		output += `<mask id="mask">${mask}</mask>`
@@ -17,10 +16,12 @@ export default function generateSVG (options) {
 	// output colors in reverse order for first color to be on top
 	// last color needs no path
 	const lastColor = colors.pop()
-	output += `<rect width="100" height="100" fill="${lastColor}" />`
+	output += `<rect width="100" height="100" fill="${lastColor.color}" />`
+	let stripePos = 100 - stripeSize * lastColor.ratio
 	for (let i = colors.length - 1; i >= 0; i--) {
 		const color = colors[i]
-		output += `<path d="M 0 0 L 0 ${(i + 1) * stripeSize + offsetTop} ${stripeCurve} L 100 0" fill="${color}" />`
+		output += `<path d="M 0 0 L 0 ${stripePos} ${stripeCurve} L 100 0" fill="${color.color}" />`
+		stripePos -= stripeSize * color.ratio
 	}
 
 	output += `</g>`
