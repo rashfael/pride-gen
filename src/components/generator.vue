@@ -1,7 +1,7 @@
 <template lang="pug">
 #generator
 	.controls
-		.settings
+		.settings(v-scrollbar.y="")
 			.colors
 				.color(v-for="color, index in colors")
 					bunt-input.input-color(type="color", :name="`color-${index + 1}`", :label="`Color ${index + 1}`", :value="color.color", @input="changeColor(index, $event)")
@@ -14,15 +14,19 @@
 			bunt-switch(name="add-logo", v-model="addLogo", label="add datenobservatorium logo")
 		a#btn-export.bunt-button(:href="downloadFile", download="pride.svg") export
 	svg(viewBox="0 0 100 100", v-html="SVGContent")
+	.presets(v-scrollbar.y="")
+		preset(v-for="preset in presets", :preset="preset", @select="selectPreset(preset)")
 	canvas(ref="faviconCanvas", height="32px", width="32px")
 </template>
 <script>
 import generateSVG from 'lib/generator'
+import presets from 'presets'
+import Preset from './preset'
 
 const URL_WRITE_DEBOUNCE = 1000
 
 export default {
-	components: {},
+	components: {Preset},
 	data () {
 		return {
 			colors: [
@@ -37,7 +41,8 @@ export default {
 			transform: 'rotate(-20, 50, 50)',
 			mask: '<circle cx="50" cy="50" r="50" fill="white"/>',
 			offsetTop: 7,
-			addLogo: false
+			addLogo: false,
+			presets
 		}
 	},
 	computed: {
@@ -61,6 +66,8 @@ export default {
 		// watch the whole output because I am lazy
 		SVGContent () {
 			if (this.urlWriteDebounceTimeout) return
+			this.updateURL()
+			this.drawFavicon()
 			this.urlWriteDebounceTimeout = setTimeout(() => {
 				this.urlWriteDebounceTimeout = null
 				this.updateURL()
@@ -93,13 +100,19 @@ export default {
 		addColor () {
 			this.colors.push('#ffffff')
 		},
+		selectPreset (preset) {
+			this.colors = preset.colors.slice()
+			this.stripeCurve = preset.stripeCurve
+			this.transform = preset.transform
+			this.mask = preset.mask
+			this.addLogo = preset.addLogo
+		},
 		updateURL () {
 			const hash = btoa(JSON.stringify({
 				colors: this.colors,
 				stripeCurve: this.stripeCurve,
 				transform: this.transform,
 				mask: this.mask,
-				offsetTop: this.offsetTop,
 				addLogo: this.addLogo
 			}))
 			window.location.hash = hash
@@ -171,6 +184,12 @@ export default {
 		margin: 0 64px
 		align-self: center
 		max-height: 80vh
+
+	.presets
+		card()
+		display: flex
+		flex-direction: column
+		width: 6vw
 
 	> canvas
 		display: none

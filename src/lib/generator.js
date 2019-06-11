@@ -3,7 +3,8 @@
 const TOTAL_HEIGHT = 100
 
 export default function generateSVG (options) {
-	const {colors, transform, mask, addLogo} = options
+	const colors = options.colors.slice()
+	const {transform, mask, addLogo} = options
 	const stripeCurve = options.stripeCurve || 'l 100 0'
 	let output = ''
 
@@ -12,7 +13,11 @@ export default function generateSVG (options) {
 	if (mask) {
 		output += `<mask id="mask">${mask}</mask>`
 	}
-	output += `<g transform="${transform}" mask="url(#mask)">`
+	output += `<g transform="${transform}"`
+	if (mask) {
+		output += 'mask="url(#mask)"'
+	}
+	output += '>'
 	// output colors in reverse order for first color to be on top
 	// last color needs no path
 	const lastColor = colors.pop()
