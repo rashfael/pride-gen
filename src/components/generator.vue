@@ -8,9 +8,9 @@
 					bunt-input.input-ratio(type="number", :name="`ratio-${index + 1}`", label="Ratio", :value="color.ratio", @input="changeRatio(index, $event)")
 					bunt-icon-button(@click="deleteColor(index)") close
 				bunt-button#btn-add-color(@click="addColor") add color
-			bunt-input(name="stripe-curve", v-model="stripeCurve", label="Stripe Curve")
-			bunt-input(name="transform", v-model="transform", label="Transform")
-			bunt-input(name="mask", v-model="mask", label="Mask")
+			bunt-input(name="stripe-curve", v-model="stripeCurve", label="Stripe Curve", hint="<a href='https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorial/Paths' target='_blank'>svg path string</a>. Use relative commands!", :hint-is-html="true")
+			bunt-input(name="transform", v-model="transform", label="Transform", hint="<a href='https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/transform' target='_blank'>svg transform</a>. Transforms the complete flag.", :hint-is-html="true")
+			bunt-input(name="mask", v-model="mask", label="Mask", hint="Content of a <a href='https://developer.mozilla.org/en-US/docs/Web/SVG/Element/mask' target='_blank'>svg mask definition</a>.", :hint-is-html="true")
 			bunt-switch(name="add-logo", v-model="addLogo", label="add datenobservatorium logo")
 		a#btn-export.bunt-button(:href="downloadFile", download="pride.svg") export
 	svg(viewBox="0 0 100 100", v-html="SVGContent")
@@ -157,6 +157,7 @@ export default {
 				align-items: flex-end
 				.bunt-input
 					flex: auto
+					input-style(size: compact)
 				.input-color
 					.label-input-container
 						height: 37px
@@ -176,7 +177,6 @@ export default {
 		.bunt-icon-button
 			icon-button-style()
 		.bunt-input
-			input-style(size: compact)
 			flex: none
 		.bunt-switch
 			margin: 16px 0
