@@ -11,6 +11,7 @@
 			bunt-input(name="stripe-curve", v-model="stripeCurve", label="Stripe Curve", hint="<a href='https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorial/Paths' target='_blank'>svg path string</a>. Use relative commands!", :hint-is-html="true")
 			bunt-input(name="transform", v-model="transform", label="Transform", hint="<a href='https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/transform' target='_blank'>svg transform</a>. Transforms the complete flag.", :hint-is-html="true")
 			bunt-input(name="mask", v-model="mask", label="Mask", hint="Content of a <a href='https://developer.mozilla.org/en-US/docs/Web/SVG/Element/mask' target='_blank'>svg mask definition</a>.", :hint-is-html="true")
+			p: small All SVG options operate on a 100x100 viewport, with 0,0 in the top left corner
 			bunt-switch(name="add-logo", v-model="addLogo", label="add datenobservatorium logo")
 		a#btn-export.bunt-button(:href="downloadFile", download="pride.svg") export
 	svg(viewBox="0 0 100 100", v-html="SVGContent")
@@ -183,6 +184,8 @@ export default {
 		#btn-export
 			button-style(text-color: $clr-primary-text-dark, size: huge)
 			background-image: unquote(stripe(rainbow, -45deg, 16px))
+	small
+		font-size: 12px
 
 	> svg
 		flex: auto
