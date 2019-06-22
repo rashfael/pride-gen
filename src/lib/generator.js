@@ -5,7 +5,7 @@ let maskCounter = 0 // ensure unique mask ids
 
 export default function generateSVG (options) {
 	const colors = options.colors.slice()
-	const {transform, mask, addLogo} = options
+	const {transform, mask, useClip, addLogo} = options
 	const stripeCurve = options.stripeCurve || 'l 100 0'
 	let output = ''
 
@@ -13,11 +13,19 @@ export default function generateSVG (options) {
 	// use mask instead of clip to avoid ragged edges
 	maskCounter++
 	if (mask) {
-		output += `<mask id="mask-${maskCounter}">${mask}</mask>`
+		if (useClip) {
+			output += `<clipPath id="clip-${maskCounter}">${mask}</clipPath>`
+		} else {
+			output += `<mask id="mask-${maskCounter}">${mask}</mask>`
+		}
 	}
 	output += `<g transform="${transform}"`
 	if (mask) {
-		output += ` mask="url(#mask-${maskCounter})"`
+		if (useClip) {
+			output += ` clip-path="url(#clip-${maskCounter})"`
+		} else {
+			output += ` mask="url(#mask-${maskCounter})"`
+		}
 	}
 	output += '>'
 	// output colors in reverse order for first color to be on top

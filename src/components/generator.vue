@@ -11,6 +11,8 @@
 			bunt-input(name="stripe-curve", v-model="stripeCurve", label="Stripe Curve", hint="<a href='https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorial/Paths' target='_blank'>svg path string</a>. Use relative commands!", :hint-is-html="true")
 			bunt-input(name="transform", v-model="transform", label="Transform", hint="<a href='https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/transform' target='_blank'>svg transform</a>. Transforms the complete flag.", :hint-is-html="true")
 			bunt-input(name="mask", v-model="mask", label="Mask", hint="Content of a <a href='https://developer.mozilla.org/en-US/docs/Web/SVG/Element/mask' target='_blank'>svg mask definition</a>.", :hint-is-html="true")
+			bunt-switch(name="use-clip", v-model="useClip", label="Use clip instead of mask")
+			small.switch-hint mask is prettier for display, but isn't supported in pdf for print
 			p: small All SVG options operate on a 100x100 viewport, with 0,0 in the top left corner
 			bunt-switch(name="add-logo", v-model="addLogo", label="add datenobservatorium logo")
 		a#btn-export.bunt-button(:href="downloadFile", download="pride.svg") export
@@ -42,6 +44,7 @@ export default {
 			transform: 'rotate(-20, 50, 50)',
 			mask: '<circle cx="50" cy="50" r="50" fill="white"/>',
 			offsetTop: 7,
+			useClip: false,
 			addLogo: false,
 			presets
 		}
@@ -53,7 +56,8 @@ export default {
 				stripeCurve: this.stripeCurve,
 				transform: this.transform,
 				mask: this.mask,
-				addLogo: this.addLogo
+				addLogo: this.addLogo,
+				useClip: this.useClip
 			})
 		},
 		SVGFile () {
@@ -114,7 +118,8 @@ export default {
 				stripeCurve: this.stripeCurve,
 				transform: this.transform,
 				mask: this.mask,
-				addLogo: this.addLogo
+				addLogo: this.addLogo,
+				useClip: this.useClip
 			}))
 			window.location.hash = hash
 		},
@@ -181,6 +186,9 @@ export default {
 			flex: none
 		.bunt-switch
 			margin: 16px 0
+
+		.switch-hint
+			margin: -16px 0 0 46px
 		#btn-export
 			button-style(text-color: $clr-primary-text-dark, size: huge)
 			background-image: unquote(stripe(rainbow, -45deg, 16px))
