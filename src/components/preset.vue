@@ -19,7 +19,8 @@ export default {
 				stripeCurve: this.preset.stripeCurve,
 				transform: this.preset.transform,
 				mask: this.preset.mask,
-				addLogo: this.preset.addLogo
+				addLogo: this.preset.addLogo,
+				mastodonBackground: this.preset.mastodonBackground
 			})
 		}
 	},

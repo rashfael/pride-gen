@@ -8,13 +8,14 @@
 					bunt-input.input-ratio(type="number", :name="`ratio-${index + 1}`", label="Ratio", :value="color.ratio", @input="changeRatio(index, $event)")
 					bunt-icon-button(@click="deleteColor(index)") close
 				bunt-button#btn-add-color(@click="addColor") add color
-			bunt-input(name="stripe-curve", v-model="stripeCurve", label="Stripe Curve", hint="<a href='https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorial/Paths' target='_blank'>svg path string</a>. Use relative commands!", :hint-is-html="true")
-			bunt-input(name="transform", v-model="transform", label="Transform", hint="<a href='https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/transform' target='_blank'>svg transform</a>. Transforms the complete flag.", :hint-is-html="true")
-			bunt-input(name="mask", v-model="mask", label="Mask", hint="Content of a <a href='https://developer.mozilla.org/en-US/docs/Web/SVG/Element/mask' target='_blank'>svg mask definition</a>.", :hint-is-html="true")
+			bunt-input(name="stripe-curve", v-model="stripeCurve", label="Stripe Curve", hint="<a href='https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorial/Paths' target='_blank'>svg path string</a>. Use relative commands!", :hint-is-html="true", :disabled="mastodonBackground")
+			bunt-input(name="transform", v-model="transform", label="Transform", hint="<a href='https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/transform' target='_blank'>svg transform</a>. Transforms the complete flag.", :hint-is-html="true", :disabled="mastodonBackground")
+			bunt-input(name="mask", v-model="mask", label="Mask", hint="Content of a <a href='https://developer.mozilla.org/en-US/docs/Web/SVG/Element/mask' target='_blank'>svg mask definition</a>.", :hint-is-html="true", :disabled="mastodonBackground")
 			bunt-switch(name="use-clip", v-model="useClip", label="Use clip instead of mask")
 			small.switch-hint mask is prettier for display, but isn't supported in pdf for print
 			p: small All SVG options operate on a 100x100 viewport, with 0,0 in the top left corner
 			bunt-switch(name="add-logo", v-model="addLogo", label="add datenobservatorium logo")
+			bunt-switch(name="add-mastodon", v-model="mastodonBackground", label="use chaos social logo")
 		a#btn-export.bunt-button(:href="downloadFile", download="pride.svg") export
 	svg(viewBox="0 0 100 100", v-html="SVGContent")
 	.presets(v-scrollbar.y="")
@@ -46,6 +47,7 @@ export default {
 			offsetTop: 7,
 			useClip: false,
 			addLogo: false,
+			mastodonBackground: false,
 			presets
 		}
 	},
@@ -57,7 +59,8 @@ export default {
 				transform: this.transform,
 				mask: this.mask,
 				addLogo: this.addLogo,
-				useClip: this.useClip
+				useClip: this.useClip,
+				mastodonBackground: this.mastodonBackground
 			})
 		},
 		SVGFile () {
@@ -111,6 +114,7 @@ export default {
 			this.transform = preset.transform
 			this.mask = preset.mask
 			this.addLogo = preset.addLogo
+			this.mastodonBackground = preset.mastodonBackground
 		},
 		updateURL () {
 			const hash = btoa(JSON.stringify({
@@ -119,6 +123,7 @@ export default {
 				transform: this.transform,
 				mask: this.mask,
 				addLogo: this.addLogo,
+				mastodonBackground: this.mastodonBackground,
 				useClip: this.useClip
 			}))
 			window.location.hash = hash

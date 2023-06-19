@@ -89,4 +89,76 @@ export default [{
 	mask: '<circle cx="50" cy="50" r="50" fill="white"/>',
 	offsetTop: 7,
 	addLogo: false
+// }, {
+// 	colors: [
+// 		{color: '#FFF', ratio: 1},
+// 		{color: '#750787', ratio: 1},
+// 		{color: '#004dff', ratio: 1},
+// 		{color: '#008026', ratio: 1},
+// 		{color: '#ffed00', ratio: 1},
+// 		{color: '#ff8c00', ratio: 1},
+// 		{color: '#e40303', ratio: 1},
+// 		{color: '#FFF', ratio: 1}
+// 	],
+// 	stripeCurve: 'c 30 4, 40 -15, 100 0',
+// 	transform: 'rotate(200, 50, 50)',
+// 	mask: '<circle cx="50" cy="50" r="50" fill="white"/>',
+// 	offsetTop: 7,
+// 	addLogo: false
+}, {
+	colors: [
+		{color: '#e40303', ratio: 1.4},
+		{color: '#ff8c00', ratio: 1},
+		{color: '#ffed00', ratio: 1},
+		{color: '#008026', ratio: 1},
+		{color: '#004dff', ratio: 1},
+		{color: '#750787', ratio: 1.1}
+	],
+	mastodonBackground: true
+}, {
+	colors: [
+		{color: '#5BCEFA', ratio: 1.4},
+		{color: '#F5A9B8', ratio: 1},
+		{color: '#FFFFFF', ratio: 1},
+		{color: '#F5A9B8', ratio: 1},
+		{color: '#5BCEFA', ratio: 1},
+	],
+	mastodonBackground: true
+}, {
+	colors: [
+		{color: '#000000', ratio: 2},
+		{color: '#a3a3a3', ratio: 1},
+		{color: '#FFFFFF', ratio: 1},
+		{color: '#800080', ratio: 1.6},
+	],
+	mastodonBackground: true
+}, {
+	colors: [
+		{color: '#d60270', ratio: 2},
+		{color: '#9b4f96', ratio: 1},
+		{color: '#0038a8', ratio: 2}
+	],
+	mastodonBackground: true
+}, {
+	colors: [
+		{color: '#ff218c', ratio: 1.2},
+		{color: '#ffd800', ratio: 1},
+		{color: '#21b1ff', ratio: 1}
+	],
+	mastodonBackground: true
+}, {
+	colors: [
+		{color: '#FFF430', ratio: 1.25},
+		{color: '#FFFFFF', ratio: 1},
+		{color: '#9C59D1', ratio: 1},
+		{color: '#000000', ratio: 1.2}
+	],
+	mastodonBackground: true
+}, {
+	colors: [
+		{color: '#b57edc', ratio: 1.2},
+		{color: '#FFFFFF', ratio: 1},
+		{color: '#4a8123', ratio: 1}
+	],
+	mastodonBackground: true
 }]
