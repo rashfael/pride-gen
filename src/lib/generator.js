@@ -13,7 +13,7 @@ export default function generateSVG (options) {
 		output += mastodonBG
 		stripeCurve = 'q 10 10, 20 0 t 20 10 t 20 -5 t 20 -10 t 20 -10'
 		transform = 'translate(29, 19.3) rotate(-20, 50, 50) scale(0.28, 0.1)'
-		mask = `<path d="M 0 0 L 0 7 ${stripeCurve} L 100 50 L 0 50" fill="white"/><path d="M 0 100 l 0 -1 ${stripeCurve} L 100 50 L 0 50" fill="white"/>`
+		mask = `<path d="M 0 0 L 0 7 ${stripeCurve} L 100 51 L 0 51" fill="white"/><path d="M 0 100 l 0 -1 ${stripeCurve} L 100 49 L 0 49" fill="white"/>`
 	}
 
 	const stripeSize = TOTAL_HEIGHT / options.colors.reduce((acc, {ratio}) => acc + ratio, 0)
