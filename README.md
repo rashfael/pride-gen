@@ -1,6 +1,6 @@
 # pride-gen
 
-[pride-gen.datenobservatorium.de](https://pride-gen.datenobservatorium.de)
+[pride-gen.rash.codes](https://pride-gen.rash.codes)
 
 ## Project setup
 ```
